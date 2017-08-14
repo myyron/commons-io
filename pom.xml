@@ -23,9 +23,9 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>commons-io</groupId>
-  <artifactId>commons-io</artifactId>
-  <version>2.6-SNAPSHOT</version>
-  <name>Apache Commons IO</name>
+  <artifactId>fork-commons-io</artifactId>
+  <version>2.5.1</version>
+  <name>Fork - Apache Commons IO</name>
 
   <inceptionYear>2002</inceptionYear>
   <description>
@@ -39,14 +39,21 @@ file comparators, endian transformation classes, and much more.
     <system>jira</system>
     <url>http://issues.apache.org/jira/browse/IO</url>
   </issueManagement>
-
-  <distributionManagement>
-    <site>
-      <id>apache.website</id>
-      <name>Apache Commons Site</name>
-      <url>scm:svn:https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-io/</url>
-    </site>
-  </distributionManagement>
+  
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <url>
+                http://prod-hubdataaws02:18080/repository/releases
+            </url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>
+                http://prod-hubdataaws02:18080/repository/snapshots
+            </url>
+        </snapshotRepository>
+    </distributionManagement>
 
   <scm>
     <connection>scm:git:http://git-wip-us.apache.org/repos/asf/commons-io.git</connection>
@@ -292,16 +299,7 @@ file comparators, endian transformation classes, and much more.
           <reuseForks>false</reuseForks>
           <!-- limit memory size see IO-161 -->
           <argLine>-Xmx25M</argLine>
-          <includes>
-            <!-- Only include test classes, not test data -->
-            <include>**/*Test*.class</include>
-          </includes>
-          <excludes>
-            <exclude>**/*AbstractTestCase*</exclude>
-            <exclude>**/testtools/**</exclude>
-            <!-- http://jira.codehaus.org/browse/SUREFIRE-44 -->
-            <exclude>**/*$*</exclude>
-          </excludes>
+          <skipTests>true</skipTests>
         </configuration>
       </plugin>
       <plugin>
