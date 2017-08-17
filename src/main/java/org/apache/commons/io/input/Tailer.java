@@ -26,6 +26,7 @@ import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
 
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
 
 /**
  * Simple implementation of the unix "tail -f" functionality.
@@ -167,6 +168,10 @@ public class Tailer implements Runnable {
      * Whether to ignore reading modified file with the same length.
      */
     private final boolean ignoreNew;
+    
+    private Logger logger;
+    
+    private String threadName;
 
     /**
      * The tailer will run as long as this value is true.
@@ -475,6 +480,11 @@ public class Tailer implements Runnable {
      */
     @Override
     public void run() {
+        
+        if (logger != null) {
+            logger.info("tailer started - " + threadName);
+        }
+        
         RandomAccessFile reader = null;
         try {
             long last = 0; // The last time the file was checked for changes
@@ -566,6 +576,10 @@ public class Tailer implements Runnable {
                 listener.handle(e);
             }
             stop();
+            
+            if (logger != null) {
+                logger.info("tailer stopped - " + threadName);
+            }
         }
     }
 
@@ -626,5 +640,13 @@ public class Tailer implements Runnable {
 
             return rePos;
         }
+    }
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
+    }
+
+    public void setThreadName(String threadName) {
+        this.threadName = threadName;
     }
 }
