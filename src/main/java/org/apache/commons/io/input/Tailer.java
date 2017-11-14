@@ -462,7 +462,7 @@ public class Tailer implements Runnable {
      * @return whether to keep on running.
      * @since 2.5
      */
-    protected boolean getRun() {
+    public boolean getRun() {
         return run;
     }
 
