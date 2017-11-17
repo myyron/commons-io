@@ -649,4 +649,8 @@ public class Tailer implements Runnable {
     public void setThreadName(String threadName) {
         this.threadName = threadName;
     }
+
+    public TailerListener getListener() {
+        return listener;
+    }
 }
